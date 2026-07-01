@@ -1,4 +1,4 @@
-// Seed command description: use this script to populate the OctoFit database with sample data.
+// Seed the octofit_db database with test data.
 import { connectToDatabase } from '../config/database';
 
 export const seedCommandDescription = 'Seed command for populating octofit_db with starter data';
