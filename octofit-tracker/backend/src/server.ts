@@ -4,6 +4,11 @@ import apiRoutes from './routes/api';
 
 const app = express();
 const port = process.env.PORT ? Number(process.env.PORT) : 8000;
+const host = process.env.HOST || '0.0.0.0';
+const codespaceName = process.env.CODESPACE_NAME;
+const baseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev`
+  : 'http://localhost:8000';
 
 app.use(express.json());
 app.use((req, res, next) => {
@@ -21,8 +26,9 @@ const startServer = async () => {
     console.error('MongoDB connection error:', error);
   }
 
-  app.listen(port, () => {
-    console.log(`Backend listening on port ${port}`);
+  app.listen(port, host, () => {
+    console.log(`Backend listening on ${host}:${port}`);
+    console.log(`API base URL: ${baseUrl}`);
   });
 };
 

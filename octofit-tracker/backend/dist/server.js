@@ -8,6 +8,11 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const api_1 = __importDefault(require("./routes/api"));
 const app = (0, express_1.default)();
 const port = process.env.PORT ? Number(process.env.PORT) : 8000;
+const host = process.env.HOST || '0.0.0.0';
+const codespaceName = process.env.CODESPACE_NAME;
+const baseUrl = codespaceName
+    ? `https://${codespaceName}-8000.app.github.dev`
+    : 'http://localhost:8000';
 app.use(express_1.default.json());
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -23,8 +28,9 @@ const startServer = async () => {
     catch (error) {
         console.error('MongoDB connection error:', error);
     }
-    app.listen(port, () => {
-        console.log(`Backend listening on port ${port}`);
+    app.listen(port, host, () => {
+        console.log(`Backend listening on ${host}:${port}`);
+        console.log(`API base URL: ${baseUrl}`);
     });
 };
 startServer();
